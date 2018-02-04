@@ -1,0 +1,1 @@
+Seker enables users to rent and loan tools.
