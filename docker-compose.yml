@@ -1,0 +1,34 @@
+version: '0.1'
+services:
+  db:
+    build: ./db
+    volumes:
+      - ./db/pgdata:/pgdata
+    ports:
+      - "5432"
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - PGDATA=/pgdata
+
+  server:
+    build:
+      context: ./server
+      args:
+        app_env: ${APP_ENV}
+    volumes:
+      - ./server:/go/src/github.com/conorburke/Seker/api
+    ports:
+      - "5000:8080"
+    links:
+      - db
+
+  client:
+    build:
+      context: ./client
+      args:
+        app_env: ${APP_ENV}
+    volumes:
+      - ./client/src:/client/src 
+    ports:
+      - "3000:3000"
