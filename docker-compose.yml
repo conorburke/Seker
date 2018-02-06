@@ -17,7 +17,7 @@ services:
       args:
         app_env: ${APP_ENV}
     volumes:
-      - ./server:/go/src/github.com/conorburke/Seker/api
+      - ./server:/go/src/github.com/conorburke/Seker/server
     ports:
       - "5000:8080"
     links:

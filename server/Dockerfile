@@ -6,11 +6,12 @@ FROM golang
 ARG app_env
 ENV APP_ENV $app_env
 
-COPY . /go/src/github.com/conorburke/Seker/api
-WORKDIR /go/src/github.com/conorburke/Seker/api
+COPY . /go/src/github.com/conorburke/Seker/server
+WORKDIR /go/src/github.com/conorburke/Seker/server
 
 # added vendor services will need to be included here
 RUN go get ./vendor/database
+RUN go get ./vendor/mytest
 
 RUN go get ./
 RUN go build
@@ -19,7 +20,7 @@ RUN go build
 # if production setting will build binary
 CMD if [ ${APP_ENV} = production ]; \
 	then \
-	api; \
+	server; \
 	else \
 	go get github.com/pilu/fresh && \
 	fresh; \
