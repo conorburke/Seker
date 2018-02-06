@@ -10,6 +10,9 @@ db/pgdata
 client/build
 server/tmp
 
+#server
+server/server
+
 # misc
 npm-debug.log*
 yarn-debug.log*
