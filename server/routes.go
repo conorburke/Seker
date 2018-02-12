@@ -16,11 +16,11 @@ func getFrontendUrl() string {
 	}
 }
 
-func setCors(w http.ResponseWriter) {
+func setCors(res http.ResponseWriter) {
 	frontendUrl := getFrontendUrl()
-	w.Header().Set("Access-Control-Allow-Origin", frontendUrl)
-	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS, POST, DELETE")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	res.Header().Set("Access-Control-Allow-Origin", frontendUrl)
+	res.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS, POST, DELETE")
+	res.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 }
 
 func indexHandler(res http.ResponseWriter, req *http.Request) {
