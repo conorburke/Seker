@@ -1,4 +1,4 @@
-package database
+package main
 
 import (
 	"github.com/jinzhu/gorm"
@@ -8,12 +8,6 @@ import (
 
 var DB *gorm.DB
 var err error
-
-type Tool struct {
-	gorm.Model
-	Owner string
-	Name string
-}
 
 func addDatabase(dbname string) error {
 	// create database with dbname, won't do anything if db already exists
@@ -49,7 +43,9 @@ func Init() (*gorm.DB, error) {
 		DB.CreateTable(&Tool{})
 	}
 
-	testTool := Tool{Owner: "contr0n", Name: "Mjolnir"}
+	testUser := User{firstName: "conor", lastName: "burke", email: "cjburke89@gmail.com"}
+
+	testTool := Tool{Owner: testUser, Name: "Mjolnir"}
 	DB.Create(&testTool)
 
 	return DB, err
