@@ -7,11 +7,6 @@ import(
 	"os"
 )
 
-type tool struct {
-	Owner string
-	Name string
-}
-
 // util
 func getFrontendUrl() string {
 	if os.Getenv("APP_ENV") == "production" {
@@ -28,15 +23,14 @@ func setCors(w http.ResponseWriter) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 }
 
-func D(res http.ResponseWriter, req *http.Request) {
+func indexHandler(res http.ResponseWriter, req *http.Request) {
 	setCors(res)
 
-	conor := tool{
-		Owner: "contr0n",
-		Name: "hammer",
-	}
+	testUser := User{firstName: "conor", lastName: "burke", email: "cjburke89@gmail.com"}
+	
+	testTool := Tool{Owner: testUser, Name: "Mjolnir"}
 
-	js, err := json.Marshal(conor)
+	js, err := json.Marshal(testTool)
 	if err != nil {
 		http.Error(res, err.Error(), http.StatusInternalServerError)
 		return
@@ -44,6 +38,19 @@ func D(res http.ResponseWriter, req *http.Request) {
 
 	os.Stdout.Write(js)
 	res.Header().Set("Content-Type", "application/json")
+	res.Write(js)
+}
+
+func toolsIndexHandler(res http.ResponseWriter, req *http.Request) {
+	setCors(res)
+	var tools []Tool
+	DB.Find(&tools)
+	js, err := json.Marshal(tools)
+	if err != nil {
+		http.Error(res, err.Error(), 500)
+		return
+	}
+
 	res.Write(js)
 }
 

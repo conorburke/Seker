@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database"
 	"fmt"
 	"net/http"
 	"log"
@@ -10,10 +9,10 @@ import (
 )
 
 func main() {
-	defer database.DB.Close()
+	defer DB.Close()
 
 	// add database
-	_, err := database.Init()
+	_, err := Init()
 	if err != nil {
 		log.Println("connection to DB failed, aborting...")
 		log.Fatal(err)
@@ -37,7 +36,8 @@ func main() {
 	port := "8080"
 	fmt.Println("server up and running on port", port)
 
-	http.HandleFunc("/", D)
+	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/tools", toolsIndexHandler)
 	
 	http.ListenAndServe(":"+port, nil)
 }
